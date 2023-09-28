@@ -3,7 +3,6 @@ import { APP_INTERCEPTOR } from "@nestjs/core";
 import { MorganInterceptor, MorganModule } from "nest-morgan";
 import * as redisStore from "cache-manager-redis-store";
 import { UserModule } from "./user/user.module";
-import { OrderModule } from "./order/order.module";
 import { CustomerModule } from "./customer/customer.module";
 import { AddressModule } from "./address/address.module";
 import { ProductModule } from "./product/product.module";
@@ -24,7 +23,6 @@ import { AuthModule } from "./auth/auth.module";
     ACLModule,
     AuthModule,
     UserModule,
-    OrderModule,
     CustomerModule,
     AddressModule,
     ProductModule,

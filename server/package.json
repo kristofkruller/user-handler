@@ -17,9 +17,7 @@
     "package:container": "docker build .",
     "compose:up": "docker-compose up -d",
     "compose:down": "docker-compose down --volumes",
-    "format": "prettier --write .",
-    "lint": "eslint './src/**/*.{ts, tsx}'",
-    "lint:fix": "eslint --fix './src/**/*.{ts, tsx}'"
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@nestjs/common": "8.4.7",
@@ -73,10 +71,7 @@
     "@types/passport-jwt": "3.0.8",
     "prettier": "^2.8.0",
     "@types/cache-manager": "3.4.3",
-    "@types/cache-manager-redis-store": "2.0.1",
-    "@typescript-eslint/eslint-plugin": "^4.1.0",
-    "@typescript-eslint/parser": "^4.1.0",
-    "eslint": "^7.0.0"
+    "@types/cache-manager-redis-store": "2.0.1"
   },
   "jest": {
     "preset": "ts-jest",

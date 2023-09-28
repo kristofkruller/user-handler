@@ -1,5 +1,5 @@
 import { Address } from "../address/Address";
-import { Order } from "../order/Order";
+import { Product } from "../product/Product";
 
 export type Customer = {
   address?: Address | null;
@@ -8,7 +8,7 @@ export type Customer = {
   firstName: string | null;
   id: string;
   lastName: string | null;
-  orders?: Array<Order>;
   phone: string | null;
+  products?: Array<Product>;
   updatedAt: Date;
 };
