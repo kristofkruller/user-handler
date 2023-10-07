@@ -11,7 +11,10 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional } from "class-validator";
+import { IsString, IsOptional, ValidateNested } from "class-validator";
+import { ProductCreateNestedManyWithoutUsersInput } from "./ProductCreateNestedManyWithoutUsersInput";
+import { Type } from "class-transformer";
+import { RecipeCreateNestedManyWithoutUsersInput } from "./RecipeCreateNestedManyWithoutUsersInput";
 import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
@@ -47,6 +50,30 @@ class UserCreateInput {
   @IsString()
   @Field(() => String)
   password!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => ProductCreateNestedManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => ProductCreateNestedManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => ProductCreateNestedManyWithoutUsersInput, {
+    nullable: true,
+  })
+  product?: ProductCreateNestedManyWithoutUsersInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => RecipeCreateNestedManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => RecipeCreateNestedManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => RecipeCreateNestedManyWithoutUsersInput, {
+    nullable: true,
+  })
+  recipe?: RecipeCreateNestedManyWithoutUsersInput;
 
   @ApiProperty({
     required: true,

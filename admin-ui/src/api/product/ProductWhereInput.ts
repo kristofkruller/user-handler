@@ -1,12 +1,14 @@
-import { CustomerWhereUniqueInput } from "../customer/CustomerWhereUniqueInput";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { StringFilter } from "../../util/StringFilter";
 import { FloatNullableFilter } from "../../util/FloatNullableFilter";
+import { RecipeListRelationFilter } from "../recipe/RecipeListRelationFilter";
+import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 
 export type ProductWhereInput = {
-  customer?: CustomerWhereUniqueInput;
   description?: StringNullableFilter;
   id?: StringFilter;
   itemPrice?: FloatNullableFilter;
   name?: StringNullableFilter;
+  recipe?: RecipeListRelationFilter;
+  user?: UserWhereUniqueInput;
 };

@@ -1,44 +1,8 @@
 [
   {
-    "role": "Moderator",
-    "resource": "User",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "Writer",
-    "resource": "User",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "Reader",
-    "resource": "User",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
     "role": "Admin",
     "resource": "User",
     "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "Moderator",
-    "resource": "User",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Writer",
-    "resource": "User",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Reader",
-    "resource": "User",
-    "action": "create:any",
     "attributes": "*"
   },
   {
@@ -54,42 +18,12 @@
     "attributes": "*"
   },
   {
-    "role": "Writer",
-    "resource": "User",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Reader",
-    "resource": "User",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
     "role": "Admin",
     "resource": "User",
     "action": "update:any",
     "attributes": "*"
   },
   {
-    "role": "Moderator",
-    "resource": "User",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Writer",
-    "resource": "User",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Reader",
-    "resource": "User",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
     "role": "Admin",
     "resource": "User",
     "action": "delete:any",
@@ -102,18 +36,6 @@
     "attributes": "*"
   },
   {
-    "role": "Writer",
-    "resource": "User",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Reader",
-    "resource": "User",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
     "role": "Admin",
     "resource": "User",
     "action": "read:any",
@@ -121,218 +43,44 @@
   },
   {
     "role": "Moderator",
-    "resource": "Customer",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "Writer",
-    "resource": "Customer",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "Reader",
-    "resource": "Customer",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "Admin",
-    "resource": "Customer",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "Moderator",
-    "resource": "Customer",
+    "resource": "Recipe",
     "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "Writer",
-    "resource": "Customer",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Reader",
-    "resource": "Customer",
+    "resource": "Recipe",
     "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "Admin",
-    "resource": "Customer",
+    "resource": "Recipe",
     "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "Moderator",
-    "resource": "Customer",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Writer",
-    "resource": "Customer",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Reader",
-    "resource": "Customer",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Admin",
-    "resource": "Customer",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Moderator",
-    "resource": "Customer",
+    "resource": "Recipe",
     "action": "delete:any",
     "attributes": "*"
   },
   {
     "role": "Writer",
-    "resource": "Customer",
+    "resource": "Recipe",
     "action": "delete:any",
     "attributes": "*"
   },
   {
     "role": "Reader",
-    "resource": "Customer",
+    "resource": "Recipe",
     "action": "delete:any",
     "attributes": "*"
   },
   {
     "role": "Admin",
-    "resource": "Customer",
+    "resource": "Recipe",
     "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Moderator",
-    "resource": "Customer",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Writer",
-    "resource": "Customer",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Reader",
-    "resource": "Customer",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Admin",
-    "resource": "Customer",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Reader",
-    "resource": "Address",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "Admin",
-    "resource": "Address",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "Writer",
-    "resource": "Address",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Admin",
-    "resource": "Address",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Writer",
-    "resource": "Address",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Admin",
-    "resource": "Address",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Writer",
-    "resource": "Address",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Admin",
-    "resource": "Address",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Moderator",
-    "resource": "Address",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Writer",
-    "resource": "Address",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Reader",
-    "resource": "Address",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Admin",
-    "resource": "Address",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Moderator",
-    "resource": "Product",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "Writer",
-    "resource": "Product",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "Reader",
-    "resource": "Product",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "Admin",
-    "resource": "Product",
-    "action": "read:own",
     "attributes": "*"
   },
   {
@@ -343,12 +91,6 @@
   },
   {
     "role": "Writer",
-    "resource": "Product",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Reader",
     "resource": "Product",
     "action": "create:any",
     "attributes": "*"
@@ -372,12 +114,6 @@
     "attributes": "*"
   },
   {
-    "role": "Reader",
-    "resource": "Product",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
     "role": "Admin",
     "resource": "Product",
     "action": "update:any",
@@ -396,39 +132,9 @@
     "attributes": "*"
   },
   {
-    "role": "Reader",
-    "resource": "Product",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
     "role": "Admin",
     "resource": "Product",
     "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Moderator",
-    "resource": "Product",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Writer",
-    "resource": "Product",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Reader",
-    "resource": "Product",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Admin",
-    "resource": "Product",
-    "action": "read:any",
     "attributes": "*"
   }
 ]

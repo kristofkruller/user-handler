@@ -4,28 +4,35 @@ import {
   Create,
   SimpleForm,
   CreateProps,
-  ReferenceInput,
-  SelectInput,
   TextInput,
   NumberInput,
+  ReferenceArrayInput,
+  SelectArrayInput,
+  ReferenceInput,
+  SelectInput,
 } from "react-admin";
 
-import { CustomerTitle } from "../customer/CustomerTitle";
+import { RecipeTitle } from "../recipe/RecipeTitle";
+import { UserTitle } from "../user/UserTitle";
 
 export const ProductCreate = (props: CreateProps): React.ReactElement => {
   return (
     <Create {...props}>
       <SimpleForm>
-        <ReferenceInput
-          source="customer.id"
-          reference="Customer"
-          label="Customer"
-        >
-          <SelectInput optionText={CustomerTitle} />
-        </ReferenceInput>
         <TextInput label="Description" multiline source="description" />
         <NumberInput label="Item Price" source="itemPrice" />
         <TextInput label="Name" source="name" />
+        <ReferenceArrayInput
+          source="recipe"
+          reference="Recipe"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={RecipeTitle} />
+        </ReferenceArrayInput>
+        <ReferenceInput source="user.id" reference="User" label="User">
+          <SelectInput optionText={UserTitle} />
+        </ReferenceInput>
       </SimpleForm>
     </Create>
   );

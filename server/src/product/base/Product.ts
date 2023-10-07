@@ -13,13 +13,14 @@ import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import {
   IsDate,
-  ValidateNested,
-  IsOptional,
   IsString,
+  IsOptional,
   IsNumber,
+  ValidateNested,
 } from "class-validator";
 import { Type } from "class-transformer";
-import { Customer } from "../../customer/base/Customer";
+import { Recipe } from "../../recipe/base/Recipe";
+import { User } from "../../user/base/User";
 
 @ObjectType()
 class Product {
@@ -30,15 +31,6 @@ class Product {
   @Type(() => Date)
   @Field(() => Date)
   createdAt!: Date;
-
-  @ApiProperty({
-    required: false,
-    type: () => Customer,
-  })
-  @ValidateNested()
-  @Type(() => Customer)
-  @IsOptional()
-  customer?: Customer | null;
 
   @ApiProperty({
     required: false,
@@ -82,12 +74,29 @@ class Product {
   name!: string | null;
 
   @ApiProperty({
+    required: false,
+    type: () => [Recipe],
+  })
+  @ValidateNested()
+  @Type(() => Recipe)
+  @IsOptional()
+  recipe?: Array<Recipe>;
+
+  @ApiProperty({
     required: true,
   })
   @IsDate()
   @Type(() => Date)
   @Field(() => Date)
   updatedAt!: Date;
+
+  @ApiProperty({
+    required: true,
+    type: () => User,
+  })
+  @ValidateNested()
+  @Type(() => User)
+  user?: User;
 }
 
 export { Product as Product };

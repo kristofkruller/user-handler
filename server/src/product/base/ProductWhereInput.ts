@@ -11,27 +11,16 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqueInput";
-import { ValidateNested, IsOptional } from "class-validator";
-import { Type } from "class-transformer";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { Type } from "class-transformer";
+import { IsOptional, ValidateNested } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
 import { FloatNullableFilter } from "../../util/FloatNullableFilter";
+import { RecipeListRelationFilter } from "../../recipe/base/RecipeListRelationFilter";
+import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 
 @InputType()
 class ProductWhereInput {
-  @ApiProperty({
-    required: false,
-    type: () => CustomerWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => CustomerWhereUniqueInput)
-  @IsOptional()
-  @Field(() => CustomerWhereUniqueInput, {
-    nullable: true,
-  })
-  customer?: CustomerWhereUniqueInput;
-
   @ApiProperty({
     required: false,
     type: StringNullableFilter,
@@ -75,6 +64,30 @@ class ProductWhereInput {
     nullable: true,
   })
   name?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => RecipeListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => RecipeListRelationFilter)
+  @IsOptional()
+  @Field(() => RecipeListRelationFilter, {
+    nullable: true,
+  })
+  recipe?: RecipeListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => UserWhereUniqueInput)
+  @IsOptional()
+  @Field(() => UserWhereUniqueInput, {
+    nullable: true,
+  })
+  user?: UserWhereUniqueInput;
 }
 
 export { ProductWhereInput as ProductWhereInput };

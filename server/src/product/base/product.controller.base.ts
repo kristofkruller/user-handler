@@ -20,13 +20,16 @@ import * as nestAccessControl from "nest-access-control";
 import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { ProductService } from "../product.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { ProductCreateInput } from "./ProductCreateInput";
 import { ProductWhereInput } from "./ProductWhereInput";
 import { ProductWhereUniqueInput } from "./ProductWhereUniqueInput";
 import { ProductFindManyArgs } from "./ProductFindManyArgs";
 import { ProductUpdateInput } from "./ProductUpdateInput";
 import { Product } from "./Product";
+import { RecipeFindManyArgs } from "../../recipe/base/RecipeFindManyArgs";
+import { Recipe } from "../../recipe/base/Recipe";
+import { RecipeWhereUniqueInput } from "../../recipe/base/RecipeWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -51,39 +54,31 @@ export class ProductControllerBase {
       data: {
         ...data,
 
-        customer: data.customer
-          ? {
-              connect: data.customer,
-            }
-          : undefined,
+        user: {
+          connect: data.user,
+        },
       },
       select: {
         createdAt: true,
-
-        customer: {
-          select: {
-            id: true,
-          },
-        },
-
         description: true,
         id: true,
         itemPrice: true,
         name: true,
         updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get()
   @swagger.ApiOkResponse({ type: [Product] })
   @ApiNestedQuery(ProductFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Product",
-    action: "read",
-    possession: "any",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -93,31 +88,25 @@ export class ProductControllerBase {
       ...args,
       select: {
         createdAt: true,
-
-        customer: {
-          select: {
-            id: true,
-          },
-        },
-
         description: true,
         id: true,
         itemPrice: true,
         name: true,
         updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Product })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "Product",
-    action: "read",
-    possession: "own",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -128,18 +117,17 @@ export class ProductControllerBase {
       where: params,
       select: {
         createdAt: true,
-
-        customer: {
-          select: {
-            id: true,
-          },
-        },
-
         description: true,
         id: true,
         itemPrice: true,
         name: true,
         updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
     if (result === null) {
@@ -172,26 +160,23 @@ export class ProductControllerBase {
         data: {
           ...data,
 
-          customer: data.customer
-            ? {
-                connect: data.customer,
-              }
-            : undefined,
+          user: {
+            connect: data.user,
+          },
         },
         select: {
           createdAt: true,
-
-          customer: {
-            select: {
-              id: true,
-            },
-          },
-
           description: true,
           id: true,
           itemPrice: true,
           name: true,
           updatedAt: true,
+
+          user: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {
@@ -223,18 +208,17 @@ export class ProductControllerBase {
         where: params,
         select: {
           createdAt: true,
-
-          customer: {
-            select: {
-              id: true,
-            },
-          },
-
           description: true,
           id: true,
           itemPrice: true,
           name: true,
           updatedAt: true,
+
+          user: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {
@@ -245,5 +229,105 @@ export class ProductControllerBase {
       }
       throw error;
     }
+  }
+
+  @Public()
+  @common.Get("/:id/recipe")
+  @ApiNestedQuery(RecipeFindManyArgs)
+  async findManyRecipe(
+    @common.Req() request: Request,
+    @common.Param() params: ProductWhereUniqueInput
+  ): Promise<Recipe[]> {
+    const query = plainToClass(RecipeFindManyArgs, request.query);
+    const results = await this.service.findRecipe(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        description: true,
+        email: true,
+        id: true,
+        phone: true,
+        title: true,
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/recipe")
+  @nestAccessControl.UseRoles({
+    resource: "Product",
+    action: "update",
+    possession: "any",
+  })
+  async connectRecipe(
+    @common.Param() params: ProductWhereUniqueInput,
+    @common.Body() body: RecipeWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      recipe: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/recipe")
+  @nestAccessControl.UseRoles({
+    resource: "Product",
+    action: "update",
+    possession: "any",
+  })
+  async updateRecipe(
+    @common.Param() params: ProductWhereUniqueInput,
+    @common.Body() body: RecipeWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      recipe: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/recipe")
+  @nestAccessControl.UseRoles({
+    resource: "Product",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectRecipe(
+    @common.Param() params: ProductWhereUniqueInput,
+    @common.Body() body: RecipeWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      recipe: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }

@@ -11,29 +11,18 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { CustomerWhereUniqueInput } from "../../customer/base/CustomerWhereUniqueInput";
 import {
-  ValidateNested,
-  IsOptional,
   IsString,
+  IsOptional,
   IsNumber,
+  ValidateNested,
 } from "class-validator";
+import { RecipeUpdateManyWithoutProductsInput } from "./RecipeUpdateManyWithoutProductsInput";
 import { Type } from "class-transformer";
+import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 
 @InputType()
 class ProductUpdateInput {
-  @ApiProperty({
-    required: false,
-    type: () => CustomerWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => CustomerWhereUniqueInput)
-  @IsOptional()
-  @Field(() => CustomerWhereUniqueInput, {
-    nullable: true,
-  })
-  customer?: CustomerWhereUniqueInput | null;
-
   @ApiProperty({
     required: false,
     type: String,
@@ -66,6 +55,30 @@ class ProductUpdateInput {
     nullable: true,
   })
   name?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => RecipeUpdateManyWithoutProductsInput,
+  })
+  @ValidateNested()
+  @Type(() => RecipeUpdateManyWithoutProductsInput)
+  @IsOptional()
+  @Field(() => RecipeUpdateManyWithoutProductsInput, {
+    nullable: true,
+  })
+  recipe?: RecipeUpdateManyWithoutProductsInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => UserWhereUniqueInput)
+  @IsOptional()
+  @Field(() => UserWhereUniqueInput, {
+    nullable: true,
+  })
+  user?: UserWhereUniqueInput;
 }
 
 export { ProductUpdateInput as ProductUpdateInput };

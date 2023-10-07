@@ -1,8 +1,10 @@
-import { CustomerWhereUniqueInput } from "../customer/CustomerWhereUniqueInput";
+import { RecipeCreateNestedManyWithoutProductsInput } from "./RecipeCreateNestedManyWithoutProductsInput";
+import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 
 export type ProductCreateInput = {
-  customer?: CustomerWhereUniqueInput | null;
   description?: string | null;
   itemPrice?: number | null;
   name?: string | null;
+  recipe?: RecipeCreateNestedManyWithoutProductsInput;
+  user: UserWhereUniqueInput;
 };

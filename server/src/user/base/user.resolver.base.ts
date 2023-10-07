@@ -19,6 +19,7 @@ import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { CreateUserArgs } from "./CreateUserArgs";
 import { UpdateUserArgs } from "./UpdateUserArgs";
 import { DeleteUserArgs } from "./DeleteUserArgs";
@@ -26,6 +27,10 @@ import { UserCountArgs } from "./UserCountArgs";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { User } from "./User";
+import { ProductFindManyArgs } from "../../product/base/ProductFindManyArgs";
+import { Product } from "../../product/base/Product";
+import { RecipeFindManyArgs } from "../../recipe/base/RecipeFindManyArgs";
+import { Recipe } from "../../recipe/base/Recipe";
 import { UserService } from "../user.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => User)
@@ -130,5 +135,35 @@ export class UserResolverBase {
       }
       throw error;
     }
+  }
+
+  @Public()
+  @graphql.ResolveField(() => [Product], { name: "product" })
+  async resolveFieldProduct(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: ProductFindManyArgs
+  ): Promise<Product[]> {
+    const results = await this.service.findProduct(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @Public()
+  @graphql.ResolveField(() => [Recipe], { name: "recipe" })
+  async resolveFieldRecipe(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: RecipeFindManyArgs
+  ): Promise<Recipe[]> {
+    const results = await this.service.findRecipe(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
   }
 }

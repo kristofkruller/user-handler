@@ -8,48 +8,39 @@ generator client {
 }
 
 model User {
-  createdAt DateTime @default(now())
-  firstName String?
-  id        String   @id @default(cuid())
-  lastName  String?
-  password  String
-  roles     Json
-  updatedAt DateTime @updatedAt
-  username  String   @unique
-}
-
-model Customer {
-  address   Address?  @relation(fields: [addressId], references: [id])
-  addressId String?
   createdAt DateTime  @default(now())
-  email     String?
   firstName String?
   id        String    @id @default(cuid())
   lastName  String?
-  phone     String?
-  products  Product[]
+  password  String
+  product   Product[]
+  recipe    Recipe[]
+  roles     Json
   updatedAt DateTime  @updatedAt
+  username  String    @unique
 }
 
-model Address {
-  address_1 String?
-  address_2 String?
-  city      String?
-  createdAt DateTime   @default(now())
-  customers Customer[]
-  id        String     @id @default(cuid())
-  state     String?
-  updatedAt DateTime   @updatedAt
-  zip       Int?
+model Recipe {
+  createdAt   DateTime  @default(now())
+  description String
+  email       String?
+  id          String    @id @default(cuid())
+  phone       String?
+  product     Product[]
+  title       String
+  updatedAt   DateTime  @updatedAt
+  user        User      @relation(fields: [Creator], references: [id])
+  Creator     String
 }
 
 model Product {
-  createdAt   DateTime  @default(now())
-  customer    Customer? @relation(fields: [customerId], references: [id])
-  customerId  String?
+  createdAt   DateTime @default(now())
   description String?
-  id          String    @id @default(cuid())
+  id          String   @id @default(cuid())
   itemPrice   Float?
   name        String?
-  updatedAt   DateTime  @updatedAt
+  recipe      Recipe[]
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [Creator], references: [id])
+  Creator     String
 }

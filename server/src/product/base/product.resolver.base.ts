@@ -17,8 +17,9 @@ import * as nestAccessControl from "nest-access-control";
 import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
-import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { CreateProductArgs } from "./CreateProductArgs";
 import { UpdateProductArgs } from "./UpdateProductArgs";
 import { DeleteProductArgs } from "./DeleteProductArgs";
@@ -26,7 +27,9 @@ import { ProductCountArgs } from "./ProductCountArgs";
 import { ProductFindManyArgs } from "./ProductFindManyArgs";
 import { ProductFindUniqueArgs } from "./ProductFindUniqueArgs";
 import { Product } from "./Product";
-import { Customer } from "../../customer/base/Customer";
+import { RecipeFindManyArgs } from "../../recipe/base/RecipeFindManyArgs";
+import { Recipe } from "../../recipe/base/Recipe";
+import { User } from "../../user/base/User";
 import { ProductService } from "../product.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Product)
@@ -36,12 +39,8 @@ export class ProductResolverBase {
     protected readonly rolesBuilder: nestAccessControl.RolesBuilder
   ) {}
 
+  @Public()
   @graphql.Query(() => MetaQueryPayload)
-  @nestAccessControl.UseRoles({
-    resource: "Product",
-    action: "read",
-    possession: "any",
-  })
   async _productsMeta(
     @graphql.Args() args: ProductCountArgs
   ): Promise<MetaQueryPayload> {
@@ -51,26 +50,16 @@ export class ProductResolverBase {
     };
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => [Product])
-  @nestAccessControl.UseRoles({
-    resource: "Product",
-    action: "read",
-    possession: "any",
-  })
   async products(
     @graphql.Args() args: ProductFindManyArgs
   ): Promise<Product[]> {
     return this.service.findMany(args);
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @graphql.Query(() => Product, { nullable: true })
-  @nestAccessControl.UseRoles({
-    resource: "Product",
-    action: "read",
-    possession: "own",
-  })
   async product(
     @graphql.Args() args: ProductFindUniqueArgs
   ): Promise<Product | null> {
@@ -96,11 +85,9 @@ export class ProductResolverBase {
       data: {
         ...args.data,
 
-        customer: args.data.customer
-          ? {
-              connect: args.data.customer,
-            }
-          : undefined,
+        user: {
+          connect: args.data.user,
+        },
       },
     });
   }
@@ -121,11 +108,9 @@ export class ProductResolverBase {
         data: {
           ...args.data,
 
-          customer: args.data.customer
-            ? {
-                connect: args.data.customer,
-              }
-            : undefined,
+          user: {
+            connect: args.data.user,
+          },
         },
       });
     } catch (error) {
@@ -159,20 +144,35 @@ export class ProductResolverBase {
     }
   }
 
+  @Public()
+  @graphql.ResolveField(() => [Recipe], { name: "recipe" })
+  async resolveFieldRecipe(
+    @graphql.Parent() parent: Product,
+    @graphql.Args() args: RecipeFindManyArgs
+  ): Promise<Recipe[]> {
+    const results = await this.service.findRecipe(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
   @common.UseInterceptors(AclFilterResponseInterceptor)
-  @graphql.ResolveField(() => Customer, {
+  @graphql.ResolveField(() => User, {
     nullable: true,
-    name: "customer",
+    name: "user",
   })
   @nestAccessControl.UseRoles({
-    resource: "Customer",
+    resource: "User",
     action: "read",
     possession: "any",
   })
-  async resolveFieldCustomer(
+  async resolveFieldUser(
     @graphql.Parent() parent: Product
-  ): Promise<Customer | null> {
-    const result = await this.service.getCustomer(parent.id);
+  ): Promise<User | null> {
+    const result = await this.service.getUser(parent.id);
 
     if (!result) {
       return null;

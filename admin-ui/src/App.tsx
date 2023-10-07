@@ -9,14 +9,10 @@ import { UserList } from "./user/UserList";
 import { UserCreate } from "./user/UserCreate";
 import { UserEdit } from "./user/UserEdit";
 import { UserShow } from "./user/UserShow";
-import { CustomerList } from "./customer/CustomerList";
-import { CustomerCreate } from "./customer/CustomerCreate";
-import { CustomerEdit } from "./customer/CustomerEdit";
-import { CustomerShow } from "./customer/CustomerShow";
-import { AddressList } from "./address/AddressList";
-import { AddressCreate } from "./address/AddressCreate";
-import { AddressEdit } from "./address/AddressEdit";
-import { AddressShow } from "./address/AddressShow";
+import { RecipeList } from "./recipe/RecipeList";
+import { RecipeCreate } from "./recipe/RecipeCreate";
+import { RecipeEdit } from "./recipe/RecipeEdit";
+import { RecipeShow } from "./recipe/RecipeShow";
 import { ProductList } from "./product/ProductList";
 import { ProductCreate } from "./product/ProductCreate";
 import { ProductEdit } from "./product/ProductEdit";
@@ -55,18 +51,11 @@ const App = (): React.ReactElement => {
           show={UserShow}
         />
         <Resource
-          name="Customer"
-          list={CustomerList}
-          edit={CustomerEdit}
-          create={CustomerCreate}
-          show={CustomerShow}
-        />
-        <Resource
-          name="Address"
-          list={AddressList}
-          edit={AddressEdit}
-          create={AddressCreate}
-          show={AddressShow}
+          name="Recipe"
+          list={RecipeList}
+          edit={RecipeEdit}
+          create={RecipeCreate}
+          show={RecipeShow}
         />
         <Resource
           name="Product"

@@ -21,12 +21,19 @@ import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { UserService } from "../user.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { UserCreateInput } from "./UserCreateInput";
 import { UserWhereInput } from "./UserWhereInput";
 import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserUpdateInput } from "./UserUpdateInput";
 import { User } from "./User";
+import { ProductFindManyArgs } from "../../product/base/ProductFindManyArgs";
+import { Product } from "../../product/base/Product";
+import { ProductWhereUniqueInput } from "../../product/base/ProductWhereUniqueInput";
+import { RecipeFindManyArgs } from "../../recipe/base/RecipeFindManyArgs";
+import { Recipe } from "../../recipe/base/Recipe";
+import { RecipeWhereUniqueInput } from "../../recipe/base/RecipeWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -199,5 +206,204 @@ export class UserControllerBase {
       }
       throw error;
     }
+  }
+
+  @Public()
+  @common.Get("/:id/product")
+  @ApiNestedQuery(ProductFindManyArgs)
+  async findManyProduct(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<Product[]> {
+    const query = plainToClass(ProductFindManyArgs, request.query);
+    const results = await this.service.findProduct(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        description: true,
+        id: true,
+        itemPrice: true,
+        name: true,
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/product")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async connectProduct(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: ProductWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      product: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/product")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async updateProduct(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: ProductWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      product: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/product")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectProduct(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: ProductWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      product: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @Public()
+  @common.Get("/:id/recipe")
+  @ApiNestedQuery(RecipeFindManyArgs)
+  async findManyRecipe(
+    @common.Req() request: Request,
+    @common.Param() params: UserWhereUniqueInput
+  ): Promise<Recipe[]> {
+    const query = plainToClass(RecipeFindManyArgs, request.query);
+    const results = await this.service.findRecipe(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        description: true,
+        email: true,
+        id: true,
+        phone: true,
+        title: true,
+        updatedAt: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/recipe")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async connectRecipe(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: RecipeWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      recipe: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/recipe")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async updateRecipe(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: RecipeWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      recipe: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/recipe")
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectRecipe(
+    @common.Param() params: UserWhereUniqueInput,
+    @common.Body() body: RecipeWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      recipe: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }
