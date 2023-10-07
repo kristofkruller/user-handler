@@ -1,0 +1,319 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input Credentials {
+  password: String!
+  username: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input FloatNullableFilter {
+  equals: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  lt: Float
+  lte: Float
+  not: Float
+  notIn: [Float!]
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
+type MetaQueryPayload {
+  count: Float!
+}
+
+type Mutation {
+  createProduct(data: ProductCreateInput!): Product!
+  createRecipe(data: RecipeCreateInput!): Recipe!
+  createUser(data: UserCreateInput!): User!
+  deleteProduct(where: ProductWhereUniqueInput!): Product!
+  deleteRecipe(where: RecipeWhereUniqueInput!): Recipe!
+  deleteUser(where: UserWhereUniqueInput!): User!
+  login(credentials: Credentials!): UserInfo!
+  updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product!
+  updateRecipe(data: RecipeUpdateInput!, where: RecipeWhereUniqueInput!): Recipe!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+}
+
+type Product {
+  createdAt: DateTime!
+  description: String
+  id: String!
+  itemPrice: Float
+  name: String
+  recipe(orderBy: [RecipeOrderByInput!], skip: Float, take: Float, where: RecipeWhereInput): [Recipe!]!
+  updatedAt: DateTime!
+  user: User
+}
+
+input ProductCreateInput {
+  description: String
+  itemPrice: Float
+  name: String
+  recipe: RecipeCreateNestedManyWithoutProductsInput
+  user: UserWhereUniqueInput!
+}
+
+input ProductCreateNestedManyWithoutRecipesInput {
+  connect: [ProductWhereUniqueInput!]
+}
+
+input ProductCreateNestedManyWithoutUsersInput {
+  connect: [ProductWhereUniqueInput!]
+}
+
+input ProductListRelationFilter {
+  every: ProductWhereInput
+  none: ProductWhereInput
+  some: ProductWhereInput
+}
+
+input ProductOrderByInput {
+  Creator: SortOrder
+  createdAt: SortOrder
+  description: SortOrder
+  id: SortOrder
+  itemPrice: SortOrder
+  name: SortOrder
+  updatedAt: SortOrder
+}
+
+input ProductUpdateInput {
+  description: String
+  itemPrice: Float
+  name: String
+  recipe: RecipeUpdateManyWithoutProductsInput
+  user: UserWhereUniqueInput
+}
+
+input ProductUpdateManyWithoutRecipesInput {
+  connect: [ProductWhereUniqueInput!]
+  disconnect: [ProductWhereUniqueInput!]
+  set: [ProductWhereUniqueInput!]
+}
+
+input ProductUpdateManyWithoutUsersInput {
+  connect: [ProductWhereUniqueInput!]
+  disconnect: [ProductWhereUniqueInput!]
+  set: [ProductWhereUniqueInput!]
+}
+
+input ProductWhereInput {
+  description: StringNullableFilter
+  id: StringFilter
+  itemPrice: FloatNullableFilter
+  name: StringNullableFilter
+  recipe: RecipeListRelationFilter
+  user: UserWhereUniqueInput
+}
+
+input ProductWhereUniqueInput {
+  id: String!
+}
+
+type Query {
+  _productsMeta(where: ProductWhereInput): MetaQueryPayload!
+  _recipesMeta(where: RecipeWhereInput): MetaQueryPayload!
+  _usersMeta(where: UserWhereInput): MetaQueryPayload!
+  product(where: ProductWhereUniqueInput!): Product
+  products(orderBy: [ProductOrderByInput!], skip: Float, take: Float, where: ProductWhereInput): [Product!]!
+  recipe(where: RecipeWhereUniqueInput!): Recipe
+  recipes(orderBy: [RecipeOrderByInput!], skip: Float, take: Float, where: RecipeWhereInput): [Recipe!]!
+  user(where: UserWhereUniqueInput!): User
+  userInfo: UserInfo!
+  users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
+}
+
+enum QueryMode {
+  Default
+  Insensitive
+}
+
+type Recipe {
+  createdAt: DateTime!
+  description: String!
+  email: String
+  id: String!
+  phone: String
+  product(orderBy: [ProductOrderByInput!], skip: Float, take: Float, where: ProductWhereInput): [Product!]!
+  title: String!
+  updatedAt: DateTime!
+  user: User
+}
+
+input RecipeCreateInput {
+  description: String!
+  email: String
+  phone: String
+  product: ProductCreateNestedManyWithoutRecipesInput
+  title: String!
+  user: UserWhereUniqueInput!
+}
+
+input RecipeCreateNestedManyWithoutProductsInput {
+  connect: [RecipeWhereUniqueInput!]
+}
+
+input RecipeCreateNestedManyWithoutUsersInput {
+  connect: [RecipeWhereUniqueInput!]
+}
+
+input RecipeListRelationFilter {
+  every: RecipeWhereInput
+  none: RecipeWhereInput
+  some: RecipeWhereInput
+}
+
+input RecipeOrderByInput {
+  Creator: SortOrder
+  createdAt: SortOrder
+  description: SortOrder
+  email: SortOrder
+  id: SortOrder
+  phone: SortOrder
+  title: SortOrder
+  updatedAt: SortOrder
+}
+
+input RecipeUpdateInput {
+  description: String
+  email: String
+  phone: String
+  product: ProductUpdateManyWithoutRecipesInput
+  title: String
+  user: UserWhereUniqueInput
+}
+
+input RecipeUpdateManyWithoutProductsInput {
+  connect: [RecipeWhereUniqueInput!]
+  disconnect: [RecipeWhereUniqueInput!]
+  set: [RecipeWhereUniqueInput!]
+}
+
+input RecipeUpdateManyWithoutUsersInput {
+  connect: [RecipeWhereUniqueInput!]
+  disconnect: [RecipeWhereUniqueInput!]
+  set: [RecipeWhereUniqueInput!]
+}
+
+input RecipeWhereInput {
+  description: StringFilter
+  email: StringNullableFilter
+  id: StringFilter
+  phone: StringNullableFilter
+  product: ProductListRelationFilter
+  title: StringFilter
+  user: UserWhereUniqueInput
+}
+
+input RecipeWhereUniqueInput {
+  id: String!
+}
+
+enum SortOrder {
+  Asc
+  Desc
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+type User {
+  createdAt: DateTime!
+  firstName: String
+  id: String!
+  lastName: String
+  product(orderBy: [ProductOrderByInput!], skip: Float, take: Float, where: ProductWhereInput): [Product!]!
+  recipe(orderBy: [RecipeOrderByInput!], skip: Float, take: Float, where: RecipeWhereInput): [Recipe!]!
+  roles: JSON!
+  updatedAt: DateTime!
+  username: String!
+}
+
+input UserCreateInput {
+  firstName: String
+  lastName: String
+  password: String!
+  product: ProductCreateNestedManyWithoutUsersInput
+  recipe: RecipeCreateNestedManyWithoutUsersInput
+  roles: JSON!
+  username: String!
+}
+
+type UserInfo {
+  accessToken: String
+  id: String!
+  roles: [String!]!
+  username: String!
+}
+
+input UserOrderByInput {
+  createdAt: SortOrder
+  firstName: SortOrder
+  id: SortOrder
+  lastName: SortOrder
+  password: SortOrder
+  roles: SortOrder
+  updatedAt: SortOrder
+  username: SortOrder
+}
+
+input UserUpdateInput {
+  firstName: String
+  lastName: String
+  password: String
+  product: ProductUpdateManyWithoutUsersInput
+  recipe: RecipeUpdateManyWithoutUsersInput
+  roles: JSON
+  username: String
+}
+
+input UserWhereInput {
+  firstName: StringNullableFilter
+  id: StringFilter
+  lastName: StringNullableFilter
+  product: ProductListRelationFilter
+  recipe: RecipeListRelationFilter
+  username: StringFilter
+}
+
+input UserWhereUniqueInput {
+  id: String!
+}

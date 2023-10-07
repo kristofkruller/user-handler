@@ -6,6 +6,12 @@ if [[ ! -f "./server/.env" || ! -f "./admin-ui/.env" ]]; then
   exit 1
 fi
 
+# Source environment variables
+# shellcheck disable=SC1091
+source ./server/.env || { echo "Failed to source environment variables."; exit 1; }
+# shellcheck disable=SC1091
+source ./admin-ui/.env || { echo "Failed to source environment variables."; exit 1; }
+
 # Navigate to the server directory and start Docker Compose
 cd ./server || exit
 docker-compose -f docker-compose.yml up --build

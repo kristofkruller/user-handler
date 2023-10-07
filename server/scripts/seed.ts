@@ -8,12 +8,10 @@ if (require.main === module) {
   dotenv.config();
 
   const { BCRYPT_SALT } = process.env;
-
   if (!BCRYPT_SALT) {
     throw new Error("BCRYPT_SALT environment variable must be defined");
   }
   const salt = parseSalt(BCRYPT_SALT);
-
   seed(salt).catch((error) => {
     console.error(error);
     process.exit(1);
@@ -21,29 +19,26 @@ if (require.main === module) {
 }
 
 async function seed(bcryptSalt: Salt) {
-  console.info("Seeding database...");
-
   const client = new PrismaClient();
+  try {
+    console.info("Seeding database...");
+    const data = {
+      username: "admin",
+      password: await hash("admin", bcryptSalt),
+      roles: ["user"],
+    };
 
-  const data = {
-    username: "admin",
-    password: await hash("admin", bcryptSalt),
-    roles: ["user"],
-  };
-
-  await client.user.upsert({
-    where: {
-      username: data.username,
-    },
-
-    update: {},
-    create: data,
-  });
-
-  void client.$disconnect();
-
-  console.info("Seeding database with custom seed...");
-  customSeed();
-
-  console.info("Seeded database successfully");
+    await client.user.upsert({
+      where: { username: data.username },
+      update: {},
+      create: data,
+    });
+    console.info("Seeding database with custom seed...");
+    await customSeed();
+    console.info("Seeded database successfully");
+  } catch (error) {
+    console.error(`Error in seed: ${error}`);
+  } finally {
+    await client.$disconnect();
+  }
 }
