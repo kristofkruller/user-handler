@@ -59,7 +59,7 @@ import { AuthModule } from "./auth/auth.module";
         const password = configService.get("REDIS_PASSWORD");
         const ttl = configService.get("REDIS_TTL", 5);
         const max = configService.get("REDIS_MAX_REQUESTS_CACHED", 100);
-
+        console.table({"redis_host":host,"redis_port":port})
         return {
           store: redisStore,
           host: host,

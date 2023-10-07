@@ -1,20 +1,6 @@
-:root {
-  --surface: #15192c; /*dark: black100 */
-  --white: #15192c; /*dark: black100 */
-
-  --black100: #ffffff; /*dark: white */
-  --black90: #b7bac7; /*dark: black10 */
-  --black80: #a3a8b8; /*dark: black20 */
-  --black60: #80869d; /*dark: black30 */
-  --black40: #686f8c; /*dark: black40 */
-  --black30: #515873; /*dark: black50 */
-  --black20: #444b66; /*dark: black60 */
-  --black10: #373d57; /*dark: black70 */
-  --black5: #2c3249; /*dark: black80 */
-  --black2: #22273c; /*dark: black90 */
-
-  --primary: #7950ed;
-}
+// Assume this variable is a built-in one from Elastic UI or your custom theme.
+$small-border-radius: 4px;
+$primary: #7950ed;
 
 .login-page {
   height: 100vh;
@@ -37,7 +23,7 @@
     text-align: center;
     width: 340px;
     background-color: var(--black2);
-    border-radius: var(--small-border-radius);
+    border-radius: $small-border-radius;
     margin: 1rem;
     padding: 1rem;
     border: 1px solid var(--black10);
@@ -59,30 +45,26 @@
       line-height: 22px;
     }
 
-    button,
-    .MuiButton-contained {
-      box-sizing: border-box;
-      background-color: var(--primary);
+    .euiButton {
+      background-color: $primary;
       width: 300px;
-      margin-top: 0.5rem;
-      margin-bottom: 1rem;
       margin-top: auto;
       &:hover,
       &:active,
       &:focus {
-        background-color: var(--primary);
+        background-color: darken($primary, 10%);
       }
     }
   }
 
-  form {
+  .euiForm {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     margin-top: 2rem;
 
-    label {
+    .euiFormRow {
       span {
         display: block;
         text-align: left;
@@ -91,14 +73,13 @@
       }
     }
 
-    input {
-      box-sizing: border-box;
+    .euiFieldText {
       background-color: var(--white);
       border: 1px solid var(--black10);
       padding: 0.5rem;
       margin-bottom: 1rem;
       outline: none;
-      border-radius: var(--small-border-radius);
+      border-radius: $small-border-radius;
       width: 300px;
       color: var(--black100);
       &:hover,
