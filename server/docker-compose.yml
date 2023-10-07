@@ -1,6 +1,13 @@
 version: "3"
 services:
-  server:
+  frontend:
+    build:
+      context: ../admin-ui # frontend-docker file
+    env_file:
+      - ../admin-ui/.env
+    ports:
+      - "8080:80"
+  backend:
     build:
       context: .
       args:
