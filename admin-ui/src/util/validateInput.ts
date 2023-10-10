@@ -4,7 +4,7 @@ export function validateLogin(username: string, password: string) {
   password = password.trim();
 
   const usernameRegex = /^[a-zA-Z0-9_.-]*$/;
-  const passwordRegex = /^.{6,}$/;
+  const passwordRegex = /^.{5,}$/;
 
   if (username === '' && password === '') {
     return "Please enter a username and a password."
@@ -18,7 +18,7 @@ export function validateLogin(username: string, password: string) {
     return "Invalid username. Only alphanumeric characters, underscores, hyphens, and periods are allowed.";
   }
   if (!passwordRegex.test(password)) {
-    return "Invalid password. It must contain a minimum of 6 characters.";
+    return "Invalid password. It must contain a minimum of 5 characters.";
   }
   return "Valid";
 }

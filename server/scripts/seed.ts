@@ -22,24 +22,20 @@ if (require.main === module) {
 async function seed(bcryptSalt: Salt) {
   const client = new PrismaClient();
   let adminId: string | null = null;
-  const adminPassword = process.env.ADMIN_PASS;
-  if (!adminPassword) {
-    throw new Error("ADMIN_PASS environment variable must be defined");
-  }
   try {
     // Admin user seeding 
     // one user must be seeded here because of fkey id relation
     console.info("Seeding database...");
-    const adminData = {
+    const data = {
       username: "admin",
-      password: await hash(adminPassword, bcryptSalt),
-      roles: ["admin", "moderator"],
+      password: await hash("admin", bcryptSalt),
+      roles: ["user"],
     };
 
     const admin = await client.user.upsert({
-      where: { username: adminData.username },
+      where: { username: data.username },
       update: {},
-      create: adminData,
+      create: data,
     });
 
     if (admin) {

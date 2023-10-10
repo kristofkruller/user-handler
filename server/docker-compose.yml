@@ -6,7 +6,7 @@ services:
     env_file:
       - ../admin-ui/.env
     ports:
-      - "${FEPORT}:1180"
+      - ${FEPORT}:1180
   backend:
     build:
       context: .
@@ -51,5 +51,15 @@ services:
       timeout: 45s
       interval: 10s
       retries: 10
+  nginx:
+    image: nginx:1.22-alpine
+    volumes:
+      - ../admin-ui/configuration/DOCKER_nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - frontend
+      - backend
 volumes:
   postgres: ~
