@@ -18,7 +18,8 @@ Configuration for the server component can be provided through the use of enviro
 | -------------------- | -------------------------------------------- | ------------------------------------------------------------------- |
 | BCRYPT_SALT          | the string used for hashing                  | [random-string]                                                     |
 | COMPOSE_PROJECT_NAME | the identifier of the service plus prefix    | amp_[service-identifier]                                            |
-| PORT                 | the port on which to run the server          | 3000                                                                |
+| PORT                 | the port on which to run the server          | 1190                                                                |
+| FEPORT               | the port on which to run admin-ui            | 1180                                                                |
 | DB_URL               | the connection url for the database          | [db-provider]://[username]:[password]@localhost:[db-port]/[db-name] |
 | DB_PORT              | the port used by the database instance       | [db-provider-port]                                                  |
 | DB_USER              | the username used to connect to the database | [username]                                                          |
@@ -26,6 +27,8 @@ Configuration for the server component can be provided through the use of enviro
 | DB_NAME              | the name of the database                     | [service-name] / [project-name]                                     |
 | JWT_SECRET_KEY       | the secret used to sign the json-web token   | [secret]                                                            |
 | JWT_EXPIRATION       | the expiration time for the json-web token   | 2d                                                                  |
+| TEST_PASS            | password for seeding users by roles          | [random-string]                                                     |
+| ADMIN_PASS           | password for init admin user                 | [random-string]                                                     |
 
 > **Note**
 > Amplication generates default values and stores them under the .env file. It is advised to use some form of secrets manager/vault solution when using in production. 

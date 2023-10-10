@@ -9,9 +9,12 @@ user handler - recipe app template
 `cd server && npm i && cd ..`
 `cd admin-ui && npm i && cd ..`
 
-*both start scripts req own terminal for real time logging and collections of commands in package.json/scripts*
-`./start-backend-dev.sh`
-`./start-frontend-dev.sh`
+*both start scripts req own terminal for real time logging and are collections of commands in package.json/scripts*
+`./backend.sh`
+`./frontend.sh`
 
-*for docker full stack run --build*
-`./start-docker.sh`
+*for docker full stack run (--build)*
+`./docker-build.sh`
+
+## env
+env variables must be placed for both sides, check the readme of the service you want to start

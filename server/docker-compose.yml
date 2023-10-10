@@ -6,14 +6,14 @@ services:
     env_file:
       - ../admin-ui/.env
     ports:
-      - "8080:80"
+      - "${FEPORT}:1180"
   backend:
     build:
       context: .
       args:
         NPM_LOG_LEVEL: notice
     ports:
-      - ${PORT}:3000
+      - ${PORT}:1190
     environment:
       BCRYPT_SALT: ${BCRYPT_SALT}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}

@@ -10,7 +10,7 @@ import {
   swaggerSetupOptions,
 } from "./swagger";
 
-const { PORT = 3000 } = process.env;
+const { PORT = 1190 } = process.env;
 
 async function main() {
   const app = await NestFactory.create(AppModule, { cors: true });
