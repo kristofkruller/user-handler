@@ -1,13 +1,15 @@
-import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { DateTimeFilter } from "../../util/DateTimeFilter";
 import { StringFilter } from "../../util/StringFilter";
 import { ProductListRelationFilter } from "../product/ProductListRelationFilter";
 import { RecipeListRelationFilter } from "../recipe/RecipeListRelationFilter";
 
 export type UserWhereInput = {
-  firstName?: StringNullableFilter;
+  createdAt?: DateTimeFilter;
+  firstName?: StringFilter;
   id?: StringFilter;
-  lastName?: StringNullableFilter;
+  lastName?: StringFilter;
   product?: ProductListRelationFilter;
   recipe?: RecipeListRelationFilter;
+  updatedAt?: DateTimeFilter;
   username?: StringFilter;
 };

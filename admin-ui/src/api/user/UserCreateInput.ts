@@ -3,8 +3,8 @@ import { RecipeCreateNestedManyWithoutUsersInput } from "./RecipeCreateNestedMan
 import { InputJsonValue } from "../../types";
 
 export type UserCreateInput = {
-  firstName?: string | null;
-  lastName?: string | null;
+  firstName: string;
+  lastName: string;
   password: string;
   product?: ProductCreateNestedManyWithoutUsersInput;
   recipe?: RecipeCreateNestedManyWithoutUsersInput;
