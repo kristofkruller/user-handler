@@ -1,0 +1,41 @@
+:root {
+  --surface: #15192c; /*surface dark: black100 */
+
+  --black100: #f8f8f8; /*black100: white */
+  --black90: #b7bac7; /*black90: black10 */
+  --black80: #a3a8b8; /*black80: black20 */
+  --black60: #80869d; /*black70: black30 */
+  --black40: #686f8c; /*black40: black40 */
+  --black30: #515873; /*black30: black50 */
+  --black20: #444b66; /*black20: black60 */
+  --black10: #373d57; /*black10: black70 */
+  --black5: #2c3249;
+  --black2: #22273c;
+
+  --small-border-radius: 4px;
+  --primary: #50a1ed;
+}
+
+* {
+  text-decoration: none !important;
+  transition: all .23s ease-in-out;
+}
+// unwanted eui behaviour
+*:hover {
+  transform: translateY(0) !important;
+  -webkit-transform: translateY(0) !important;
+  -moz-transform: translateY(0) !important;
+  -ms-transform: translateY(0) !important;
+  -webkit-text-decoration: none !important;
+  text-decoration: none !important;
+  transition: all .23s ease-in-out;
+}
+
+.euiButtonEmpty {
+  background-color: var(--black2);
+  border: none;
+
+  .euiButtonEmpty__content {
+    gap: 0;
+  }
+}

@@ -24,7 +24,7 @@ COPY . .
 RUN npm run build
 
 # multi-stage: production (runtime)
-FROM node:18.13.0-slim AS production
+FROM node:18.13.0 AS production
 
 # create arguments of builds time variables
 ARG user=amplication
@@ -61,7 +61,7 @@ RUN npm install --production
 USER ${user}
 
 # expose a specific port on the docker container
-ENV PORT=3000
+ENV PORT=1190
 EXPOSE ${PORT}
 
 # start the server using the previously build application

@@ -20,5 +20,5 @@
       "@app/custom-validators": ["src/validators"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "scripts"]
 }

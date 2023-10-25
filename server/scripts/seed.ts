@@ -6,12 +6,11 @@ import { hash } from "bcrypt";
 
 if (require.main === module) {
   dotenv.config();
-
   const { BCRYPT_SALT } = process.env;
-
   if (!BCRYPT_SALT) {
     throw new Error("BCRYPT_SALT environment variable must be defined");
   }
+
   const salt = parseSalt(BCRYPT_SALT);
 
   seed(salt).catch((error) => {
@@ -21,31 +20,42 @@ if (require.main === module) {
 }
 
 async function seed(bcryptSalt: Salt) {
-  console.info("Seeding database...");
-
   const client = new PrismaClient();
 
-  const data = {
-    username: "admin",
-    password: await hash("admin", bcryptSalt),
-    roles: ["user"],
-    firstName: "",
-    lastName: "",
-  };
+  let adminId: string | null = null;
+  try {
+    // Admin user seeding 
+    // one user must be seeded here because of fkey id relation
+    console.info("Seeding database...");
+    const data = {
+      username: "admin",
+      password: await hash("admin", bcryptSalt),
+      firstName: "",
+      lastName: "",
+      roles: ["user"],
+    };
 
-  await client.user.upsert({
-    where: {
-      username: data.username,
-    },
+    const admin = await client.user.upsert({
+      where: { username: data.username },
+      update: {},
+      create: data,
+    });
 
-    update: {},
-    create: data,
-  });
+    if (admin) {
+      adminId = admin.id;
+    }
 
-  void client.$disconnect();
+    if (adminId) {
+      console.info("Seeding database with custom seed...");
+      await customSeed(bcryptSalt, adminId);  // itt adod át az admin ID-ját
+    } else {
+      console.warn(`Custom seeding database was not successfull because adminId is ${typeof adminId}`);
+    }
+    console.info("Seeding done");
 
-  console.info("Seeding database with custom seed...");
-  customSeed();
-
-  console.info("Seeded database successfully");
+  } catch (error) {
+    console.error(`Error in seeding: ${error}`);
+  } finally {
+    await client.$disconnect();
+  }
 }
