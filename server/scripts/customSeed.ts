@@ -10,33 +10,58 @@ export async function customSeed(bcryptSalt: Salt, adminId: string) {
   if (!adminPassword) {
     throw new Error("ADMIN_PASS environment variable must be defined");
   }
-  
+  const testPass = process.env.TEST_PASS;
+  if (!testPass) {
+    throw new Error("TEST_PASS environment variable must be defined");
+  }
+
   try {
     // update admin
     await client.user.update({
       where: { id: adminId },
       data: {
         password: await hash(adminPassword, bcryptSalt),
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
         roles: ["admin"],
       },
     });
     // Users by roles
     const defaultRoles = ['reader', 'moderator', 'writer']
     for (const role of defaultRoles) {
+      const existingUser = await client.user.findUnique({
+        where: { username: role },
+      });
+    
+      const hashedPass = await hash(testPass, bcryptSalt); // consider using a more secure password
       const data = {
         username: role,
-        password: await hash("Asdf1234", bcryptSalt),
+        password: hashedPass,
+        firstName: faker.person.firstName(),
+        lastName: faker.person.lastName(),
         roles: [role],
       };
-      await client.user.upsert({
-        where: { username: data.username },
-        update: {},
-        create: data,
-      });
+    
+      if (existingUser) {
+        await client.user.update({
+          where: { username: role },
+          data: { password: hashedPass, roles: [role] },
+        });
+      } else {
+        await client.user.create({
+          data,
+        });
+      }
     }
 
+    const maxLimit = 50;
     // Seed products
-    for (let i = 0; i < 5; i++) {
+    // Count existing products
+    const existingProductCount = await client.product.count();
+    console.info(existingProductCount, "existingProductCount");
+    const remainingProductSlots = maxLimit - existingProductCount;
+
+    for (let i = 0; i < remainingProductSlots; i++) {
       await client.product.create({
         data: {
           name: faker.commerce.productName(),
@@ -48,7 +73,10 @@ export async function customSeed(bcryptSalt: Salt, adminId: string) {
     }
 
     // Seed recipes
-    for (let i = 0; i < 5; i++) {
+    const existingRecipeCount = await client.recipe.count();
+    console.info(existingRecipeCount, "existingRecipeCount");
+    const remainingRecipeSlots = maxLimit - existingRecipeCount;
+    for (let i = 0; i < remainingRecipeSlots; i++) {
       await client.recipe.create({
         data: {
           title: faker.lorem.words(3),
