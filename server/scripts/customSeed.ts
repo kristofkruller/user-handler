@@ -23,11 +23,11 @@ export async function customSeed(bcryptSalt: Salt, adminId: string) {
         password: await hash(adminPassword, bcryptSalt),
         firstName: faker.person.firstName(),
         lastName: faker.person.lastName(),
-        roles: ["admin"],
+        roles: ["Admin"],
       },
     });
     // Users by roles
-    const defaultRoles = ['reader', 'moderator', 'writer']
+    const defaultRoles = ['Reader', 'Moderator', 'Writer']
     for (const role of defaultRoles) {
       const existingUser = await client.user.findUnique({
         where: { username: role },

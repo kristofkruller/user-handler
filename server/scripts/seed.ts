@@ -28,7 +28,7 @@ async function seed(bcryptSalt: Salt) {
     // one user must be seeded here because of fkey id relation
     console.info("Seeding database...");
     const data = {
-      username: "admin",
+      username: "Admin",
       password: await hash("admin", bcryptSalt),
       firstName: "",
       lastName: "",
