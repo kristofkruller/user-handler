@@ -9,9 +9,9 @@ generator client {
 
 model User {
   createdAt DateTime  @default(now())
-  firstName String?
+  firstName String
   id        String    @id @default(cuid())
-  lastName  String?
+  lastName  String
   password  String
   product   Product[]
   recipe    Recipe[]

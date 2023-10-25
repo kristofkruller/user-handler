@@ -1,5 +1,23 @@
 [
   {
+    "role": "Moderator",
+    "resource": "User",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "Writer",
+    "resource": "User",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
+    "role": "Reader",
+    "resource": "User",
+    "action": "read:own",
+    "attributes": "*"
+  },
+  {
     "role": "Admin",
     "resource": "User",
     "action": "read:own",
@@ -12,49 +30,37 @@
     "attributes": "*"
   },
   {
-    "role": "Moderator",
-    "resource": "User",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
     "role": "Admin",
     "resource": "User",
     "action": "update:any",
     "attributes": "*"
   },
   {
-    "role": "Admin",
-    "resource": "User",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
     "role": "Moderator",
     "resource": "User",
     "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Admin",
-    "resource": "User",
-    "action": "read:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Moderator",
-    "resource": "Recipe",
-    "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "Writer",
-    "resource": "Recipe",
-    "action": "create:any",
+    "resource": "User",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "Reader",
+    "resource": "User",
+    "action": "read:any",
     "attributes": "*"
   },
   {
     "role": "Admin",
+    "resource": "User",
+    "action": "read:any",
+    "attributes": "*"
+  },
+  {
+    "role": "Writer",
     "resource": "Recipe",
     "action": "create:any",
     "attributes": "*"
@@ -84,27 +90,9 @@
     "attributes": "*"
   },
   {
-    "role": "Moderator",
-    "resource": "Product",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
     "role": "Writer",
     "resource": "Product",
     "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Admin",
-    "resource": "Product",
-    "action": "create:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Moderator",
-    "resource": "Product",
-    "action": "update:any",
     "attributes": "*"
   },
   {
@@ -114,25 +102,7 @@
     "attributes": "*"
   },
   {
-    "role": "Admin",
-    "resource": "Product",
-    "action": "update:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Moderator",
-    "resource": "Product",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
     "role": "Writer",
-    "resource": "Product",
-    "action": "delete:any",
-    "attributes": "*"
-  },
-  {
-    "role": "Admin",
     "resource": "Product",
     "action": "delete:any",
     "attributes": "*"

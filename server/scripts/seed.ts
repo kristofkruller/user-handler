@@ -21,6 +21,7 @@ if (require.main === module) {
 
 async function seed(bcryptSalt: Salt) {
   const client = new PrismaClient();
+
   let adminId: string | null = null;
   try {
     // Admin user seeding 
@@ -29,6 +30,8 @@ async function seed(bcryptSalt: Salt) {
     const data = {
       username: "admin",
       password: await hash("admin", bcryptSalt),
+      firstName: "",
+      lastName: "",
       roles: ["user"],
     };
 

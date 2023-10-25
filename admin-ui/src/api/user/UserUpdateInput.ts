@@ -3,8 +3,8 @@ import { RecipeUpdateManyWithoutUsersInput } from "./RecipeUpdateManyWithoutUser
 import { InputJsonValue } from "../../types";
 
 export type UserUpdateInput = {
-  firstName?: string | null;
-  lastName?: string | null;
+  firstName?: string;
+  lastName?: string;
   password?: string;
   product?: ProductUpdateManyWithoutUsersInput;
   recipe?: RecipeUpdateManyWithoutUsersInput;
